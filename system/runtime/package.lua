@@ -1,5 +1,5 @@
 local package = {}
-local packList = readFile("/apps/installed.cfg")
+local packList = readFileTab("/apps/installed.cfg")
 local packageLoading = {}
 
 function package.setEntry(name,info)
@@ -100,6 +100,19 @@ function package.save()
 		info.running = nil
 	end
 	writeFile("/apps/installed.cfg",sav)
+end
+
+function package.init()
+	print("Load packages ...")
+	for name,info in pairs(packList) do
+		if info.enabledState > 0 then
+			local ok,err = package.enable(name)
+			print(" "..name..((not ok and " could not be enabled: "..err) or " enabled"))
+		end
+	end
+end
+function package.runtime()
+
 end
 
 return package
