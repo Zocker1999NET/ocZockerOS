@@ -1,6 +1,5 @@
 local acc = {}
--- 0: for guest only asking, for else free
--- without asking : 1: user | 2: admin | 3:system
+-- level : 0: guests (controlled by other app) | 1: user | 2: admin | 3:system
 -- options : 4: with argument | 8: single asking
 local perms = { -- "permName" , "permName#argument"
 	changePermissions = 3+4+8,
@@ -27,7 +26,7 @@ local perms = { -- "permName" , "permName#argument"
 	changePackages = 3+4+8,
 }
 local appPerms = {} -- "packageName" -> "permName" , "packageName#permName#argument"
-local cfg = readFile("/apps/access.cfg")
+local cfg = readFileTab("/apps/access.cfg")
 
 local function splitPerm(name)
 	if type(name) ~= "string" or name:len() < 1 then
@@ -140,6 +139,9 @@ function acc.save()
 	writeFile("/apps/access.cfg",cfg)
 end
 
+function acc.infos()
+	return "",
+end
 function acc.init()
 	for
 end
